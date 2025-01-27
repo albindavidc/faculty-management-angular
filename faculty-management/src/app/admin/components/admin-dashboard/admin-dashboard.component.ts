@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FacultyDataComponent } from './faculty-data/faculty-data.component';
 import { FacultyTrainingsComponent } from './faculty-trainings/faculty-trainings.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,6 +13,8 @@ import { CommonModule } from '@angular/common';
 export class AdminDashboardComponent implements OnInit {
   training: boolean = false;
   faculty: boolean = false;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.showFacultyData();
@@ -32,5 +35,8 @@ export class AdminDashboardComponent implements OnInit {
     this.training = true;
   }
 
-  signOut() {}
+  signOut() {
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
+  }
 }
