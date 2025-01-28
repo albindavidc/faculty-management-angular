@@ -69,7 +69,12 @@
             (click)="viewFaculty(faculty)"
           >
             View</button
-          ><button type="button" class="btn btn-outline-primary me-2">
+          >
+          <button type="button" class="btn btn-outline-primary me-2"
+          data-bs-toggle="modal"
+          data-bs-target="#editModal"
+          (click)="viewFaculty(faculty)"
+          >
             Edit</button
           ><button type="button" class="btn btn-outline-danger">Delete</button>
         </td>
@@ -137,11 +142,9 @@
               </tr>
             </tbody>
           </table>
-        </div>
-        <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-success"
             data-bs-dismiss="modal"
           >
             Close
@@ -150,6 +153,217 @@
       </div>
     </div>
   </div>
+
+  <!-- Edit Faculty -->
+  <div
+    class="modal fade"
+    id="editModal"
+    tabindex="-1"
+    aria-labelledby="editModalLabel"
+    aria-hidden="true"
+    #editModal
+
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-success" id="editModalLabel">
+            Edit Faculty
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="facultyDetailsForm" (ngSubmit)="editFaculty()">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="floatingInput"
+                formControlName="faculty_name"
+              />
+              <label for="floatingInput">Full Name</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('faculty_name')?.invalid &&
+                  (facultyDetailsForm.get('faculty_name')?.touched ||
+                    facultyDetailsForm.get('faculty_name')?.dirty)
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="floatingInput"
+                formControlName="department"
+
+              />
+              <label for="floatingInput">Department</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('department')?.invalid &&
+                  (facultyDetailsForm.get('department')?.touched ||
+                    facultyDetailsForm.get('department')?.dirty)
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="floatingInput"
+                formControlName="email"
+              />
+              <label for="floatingInput">Email</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('email')?.invalid &&
+                  (facultyDetailsForm.get('email')?.touched ||
+                    facultyDetailsForm.get('email')?.dirty)
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="floatingPassword"
+                formControlName="password"
+              />
+              <label for="floatingPassword">Password</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('password')?.invalid &&
+                  (facultyDetailsForm.get('password')?.touched ||
+                    facultyDetailsForm.get('password')?.dirty)
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="number"
+                class="form-control"
+                id="floatingInput"
+                formControlName="mobile_number"
+              />
+              <label for="floatingInput">Mobile Number</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('mobile_number')?.invalid &&
+                  facultyDetailsForm.get('mobile_number')?.touched
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="number"
+                class="form-control"
+                id="floatingInput"
+                formControlName="aadhaar_number"
+              />
+              <label for="floatingInput">Aadhaar Number</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('aadhaar_number')?.invalid &&
+                  facultyDetailsForm.get('aadhaar_number')?.touched
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="number"
+                class="form-control"
+                id="floatingInput"
+                formControlName="joining_year"
+              />
+              <label for="floatingInput">Joining Year</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('joining_year')?.invalid &&
+                  facultyDetailsForm.get('joining_year')?.touched
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="date"
+                class="form-control"
+                id="floatingInput"
+                formControlName="date_of_birth"
+              />
+              <label for="floatingInput">Date Of Birth</label>
+              <div
+                *ngIf="
+                  facultyDetailsForm.get('date_of_birth')?.invalid &&
+                  (facultyDetailsForm.get('date_of_birth')?.touched ||
+                    facultyDetailsForm.get('date_of_birth')?.dirty)
+                "
+                class="text-danger"
+              >
+                This field is required
+              </div>
+            </div>
+
+            <!-- Add this just above your form -->
+            <div *ngIf="facultyDetailsForm.invalid" class="alert alert-warning">
+              Form Status: {{ facultyDetailsForm.status }}
+              <ul>
+                <li *ngFor="let error of getFormValidationErrors()">
+                  {{ error }}
+                </li>
+              </ul>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="facultyDetailsForm.invalid"
+            >
+              Update Faculty
+            </button>
+            <button
+            type="button"
+            class="btn btn-outline-success"
+            data-bs-dismiss="modal"
+            #closeBtn
+          >
+            Close
+          </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- Add Faculty -->
   <div

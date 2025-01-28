@@ -37,9 +37,6 @@ export class AdminDataService {
   }
 
   addFaculty(facultyObj: Faculty): Observable<Faculty> {
-    console.log('Sending request to:', this.dataUrl);
-    console.log('Request payload:', facultyObj);
-
     return this.http
       .post<Faculty>(this.dataUrl, facultyObj, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
@@ -47,5 +44,9 @@ export class AdminDataService {
 
   getAllFaculty(): Observable<Faculty[]> {
     return this.http.get<Faculty[]>(this.dataUrl);
+  }
+
+  updateFaculty(faculty: Faculty): Observable<Faculty> {
+    return this.http.put<Faculty>(this.dataUrl + '/' + faculty._id, faculty);
   }
 }

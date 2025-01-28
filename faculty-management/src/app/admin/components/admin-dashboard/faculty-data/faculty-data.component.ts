@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +17,8 @@ import { AdminDataService } from '../../../service/admin-data.service';
   styleUrl: './faculty-data.component.css',
 })
 export class FacultyDataComponent implements OnInit {
+  @ViewChild('closeBtn') closeBtn!: ElementRef; // Reference to modal
+
   facultyDetailsForm: FormGroup = new FormGroup({});
 
   facultyObj: Faculty = {
@@ -34,7 +36,7 @@ export class FacultyDataComponent implements OnInit {
 
   allFaculties: Faculty[] = [];
 
-  constructor(private fb: FormBuilder, private dataService: AdminDataService) {
+  constructor(private fb: FormBuilder, private dataService: AdminDataService, private elementRef: ElementRef) {
     // Move form initialization here
     this.initForm();
   }
@@ -92,8 +94,6 @@ export class FacultyDataComponent implements OnInit {
 
   addNewFaculty() {
     if (this.facultyDetailsForm.valid) {
-      console.log('Form is valid, preparing submission...');
-
       const formValue = this.facultyDetailsForm.value;
       const facultyData: Faculty = {
         _id: '',
@@ -108,11 +108,8 @@ export class FacultyDataComponent implements OnInit {
         aadhaar_number: Number(formValue.aadhaar_number),
       };
 
-      console.log('Submitting faculty data:', facultyData);
-
       this.dataService.addFaculty(facultyData).subscribe({
         next: (response) => {
-          console.log('Successfully added faculty:', response);
           this.facultyDetailsForm.reset();
           alert('Faculty added successfully!');
           this.getAllEmployees();
@@ -174,9 +171,48 @@ export class FacultyDataComponent implements OnInit {
       joining_year: faculty.joining_year,
       date_of_birth: faculty.date_of_birth,
 
-      email: faculty.email
+      email: faculty.email,
+      password: faculty.password,
 
     })
+  }
+
+  editFaculty(){
+    if (this.facultyDetailsForm.valid) {
+      const formValue = this.facultyDetailsForm.value;
+      const facultyData: Faculty = {
+        _id: formValue._id,
+        faculty_number: formValue.faculty_number,
+        faculty_name: formValue.faculty_name,
+        department: formValue.department,
+        email: formValue.email,
+        password: formValue.password,
+        joining_year: Number(formValue.joining_year),
+        date_of_birth: formValue.date_of_birth,
+        mobile_number: Number(formValue.mobile_number),
+        aadhaar_number: Number(formValue.aadhaar_number),
+      };
+
+      this.dataService.updateFaculty(facultyData).subscribe({
+        next: (response) => {
+          this.facultyDetailsForm.reset();
+          alert('Faculty added successfully!');
+          this.getAllEmployees();
+          
+          this.closeBtn.nativeElement.click()
+
+        },
+        error: (error) => {
+          console.error('Error details:', error);
+          alert(`Failed to add faculty: ${error.message}`);
+        },
+      })
+
+      
+    } else {
+      console.log('Form validation errors:', this.getFormValidationErrors());
+      alert('Please fill all required fields correctly.');
+    }
   }
 
 
