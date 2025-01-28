@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const Faculty = mongoose.model("Faculty", {
+const facultySchema = new mongoose.Schema({
   faculty_number: { type: Number },
-  faculty_name: { type: String },
-  departement: { type: String },
+  faculty_name: { type: String, trim: true },
+  department: { type: String },
   mobile_number: { type: Number },
   aadhaar_number: { type: Number },
   email: { type: String },
@@ -12,4 +12,6 @@ const Faculty = mongoose.model("Faculty", {
   joining_year: { type: Number },
 });
 
-module.exports = Faculty;
+const Faculty = mongoose.model("Faculty", facultySchema);
+
+export default Faculty;

@@ -27,7 +27,7 @@ export class AdminAuthService {
     }
   }
 
-  isAdminLoggedIn(): Boolean {
+  isAdminLoggedIn(): boolean {
     if (localStorage.getItem('token')) {
       return true;
     } else {

@@ -9,8 +9,8 @@
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        <div class="card-body">
-          <div class="card shadow">
+        <div class="card shadow">
+          <div class="card-body">
             <h6>Add Faculty</h6>
             <p>+</p>
           </div>
@@ -20,14 +20,55 @@
 
     <div class="col-md-4">
       <a href="" class="text-success" style="text-decoration: none">
-        <div class="card-body">
-          <div class="card shadow">
+        <div class="card shadow">
+          <div class="card-body">
             <h6>Total Faculties</h6>
             <p>10</p>
           </div>
         </div>
       </a>
     </div>
+  </div>
+
+  <div class="row pe-2 mt-3">
+    <div class="col-sm-12 text-center">
+      <div>
+        <div class="card-shadow">
+          <div class="card-body">
+            <h6 class="text-success">List of Faculties</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table table-hover mt-3">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Department</th>
+        <th scope="col">Email</th>
+        <th scope="col">Mobile</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let faculty of allFaculties">
+        <td>{{ faculty.faculty_number }}</td>
+        <td>{{ faculty.faculty_name }}</td>
+        <td>{{ faculty.department }}</td>
+        <td>{{ faculty.email }}</td>
+        <td>{{ faculty.mobile_number }}</td>
+        <td>
+          <button type="button" class="btn btn-outline-secondary me-2">
+            View</button
+          ><button type="button" class="btn btn-outline-primary me-2">
+            Edit</button
+          ><button type="button" class="btn btn-outline-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
   </div>
 
   <!-- Add Faculty -->
@@ -78,7 +119,7 @@
                 type="text"
                 class="form-control"
                 id="floatingInput"
-                formControlName="dapartment"
+                formControlName="department"
               />
               <label for="floatingInput">Department</label>
               <div
@@ -143,8 +184,7 @@
               <div
                 *ngIf="
                   facultyDetailsForm.get('mobile_number')?.invalid &&
-                  (facultyDetailsForm.get('mobile_number')?.touched ||
-                    facultyDetailsForm.get('mobile_number')?.dirty)
+                  facultyDetailsForm.get('mobile_number')?.touched
                 "
                 class="text-danger"
               >
@@ -162,8 +202,7 @@
               <div
                 *ngIf="
                   facultyDetailsForm.get('aadhaar_number')?.invalid &&
-                  (facultyDetailsForm.get('aadhaar_number')?.touched ||
-                    facultyDetailsForm.get('aadhaar_number')?.dirty)
+                  facultyDetailsForm.get('aadhaar_number')?.touched
                 "
                 class="text-danger"
               >
@@ -181,8 +220,7 @@
               <div
                 *ngIf="
                   facultyDetailsForm.get('joining_year')?.invalid &&
-                  (facultyDetailsForm.get('joining_year')?.touched ||
-                    facultyDetailsForm.get('joining_year')?.dirty)
+                  facultyDetailsForm.get('joining_year')?.touched
                 "
                 class="text-danger"
               >
@@ -209,7 +247,22 @@
               </div>
             </div>
 
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- Add this just above your form -->
+            <div *ngIf="facultyDetailsForm.invalid" class="alert alert-warning">
+              Form Status: {{ facultyDetailsForm.status }}
+              <ul>
+                <li *ngFor="let error of getFormValidationErrors()">
+                  {{ error }}
+                </li>
+              </ul>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="facultyDetailsForm.invalid"
+            >
+              Save changes
+            </button>
           </form>
         </div>
       </div>
