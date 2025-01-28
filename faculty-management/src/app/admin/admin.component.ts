@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterModule, LoginComponent],
+  imports: [RouterModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
