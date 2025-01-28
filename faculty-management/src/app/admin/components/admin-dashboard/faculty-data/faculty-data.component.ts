@@ -160,4 +160,24 @@ export class FacultyDataComponent implements OnInit {
       }
     );
   }
+
+  viewFaculty(faculty: Faculty){
+    this.facultyDetailsForm = this.fb.group({
+      _id : faculty._id,
+      faculty_name: faculty.faculty_name,
+      faculty_number: faculty.faculty_number,
+      department: faculty.department,
+
+      mobile_number: faculty.mobile_number,
+      aadhaar_number: faculty.aadhaar_number,
+
+      joining_year: faculty.joining_year,
+      date_of_birth: faculty.date_of_birth,
+
+      email: faculty.email
+
+    })
+  }
+
+
 }
