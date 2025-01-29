@@ -7,7 +7,7 @@
 
   <!-- First Row -->
   <div class="row text-success text-center mt-3">
-    <div class="col-md-4">
+    <div class="col-md-2">
       <a
         href=""
         class="text-success"
@@ -17,86 +17,91 @@
       >
         <div class="card shadow">
           <div class="card-body">
-            <h6>Add Faculty</h6>
-            <p>+</p>
+            <h6 class="text-success">Add Faculty </h6>
           </div>
         </div>
       </a>
     </div>
 
-    <div class="col-md-4">
-      <a href="" class="text-success" style="text-decoration: none">
+    <div class="col-md-10">
+      <a  class="text-success" style="text-decoration: none">
         <div class="card shadow">
           <div class="card-body">
-            <h6>Total Faculties</h6>
-            <p>{{ totalFacultyCount$ | async }}</p>
+            <h6>Total Faculty Count : {{ totalFacultyCount$ | async }}</h6>
           </div>
         </div>
       </a>
     </div>
   </div>
+  
+  <br>
+  <br>
+  <hr>
+  <br>
+
 
   <div class="row pe-2 mt-3">
     <div class="col-sm-12 text-center">
       <div>
         <div class="card-shadow">
           <div class="card-body">
-            <h6 class="text-success">List of Faculties</h6>
+            <h2 class="text-success">List of Faculties</h2>
           </div>
         </div>
+      </div>
+      <br><br>
+      <div *ngIf="faculties$ | async as faculties">
+        <table class="table table-hover mt-3">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Department</th>
+              <th scope="col">Email</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let faculty of faculties; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ faculty.faculty_name }}</td>
+              <td>{{ faculty.department }}</td>
+              <td>{{ faculty.email }}</td>
+              <td>{{ faculty.mobile_number }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary me-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#viewModal"
+                  (click)="viewFaculty(faculty)"
+                >
+                  View
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary me-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal"
+                  (click)="viewFaculty(faculty)"
+                >
+                  Edit</button
+                ><button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="deleteFaculty(faculty._id, faculty.faculty_name)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <div *ngIf="faculties$ | async as faculties">
-    <div class="table table-hover mt-3">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Department</th>
-          <th scope="col">Email</th>
-          <th scope="col">Mobile</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let faculty of faculties; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ faculty.faculty_name }}</td>
-          <td>{{ faculty.department }}</td>
-          <td>{{ faculty.email }}</td>
-          <td>{{ faculty.mobile_number }}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-outline-secondary me-2"
-              data-bs-toggle="modal"
-              data-bs-target="#viewModal"
-              (click)="viewFaculty(faculty)"
-            >
-              View
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary me-2"
-              data-bs-toggle="modal"
-              data-bs-target="#editModal"
-              (click)="viewFaculty(faculty)"
-            >
-              Edit</button
-            ><button
-              type="button"
-              class="btn btn-outline-danger"
-              (click)="deleteFaculty(faculty._id, faculty.faculty_name)"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </div>
-  </div>
 
   <!-- View Faculty -->
 

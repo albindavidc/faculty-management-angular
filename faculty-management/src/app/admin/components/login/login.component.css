@@ -1,0 +1,4 @@
+.backgroundLogin {
+  background: url("../../../../assets/login-bg.jpg") center/cover no-repeat !important;
+  height: 100vh;
+}
