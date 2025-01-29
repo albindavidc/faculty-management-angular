@@ -7,7 +7,7 @@
         class="text-success"
         style="text-decoration: none"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addFaculty"
       >
         <div class="card shadow">
           <div class="card-body">
@@ -76,7 +76,7 @@
           (click)="viewFaculty(faculty)"
           >
             Edit</button
-          ><button type="button" class="btn btn-outline-danger">Delete</button>
+          ><button type="button" class="btn btn-outline-danger" (click)="deleteFaculty(faculty)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -368,15 +368,15 @@
   <!-- Add Faculty -->
   <div
     class="modal fade"
-    id="exampleModal"
+    id="addFaculty"
     tabindex="-1"
-    aria-labelledby="exampleModalLabel"
+    aria-labelledby="addFacultyLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 text-success" id="exampleModalLabel">
+          <h1 class="modal-title fs-5 text-success" id="addFacultyLabel">
             Add Faculty
           </h1>
           <button
@@ -557,6 +557,14 @@
             >
               Save changes
             </button>
+            <button
+            type="button"
+            class="btn btn-outline-success"
+            data-bs-dismiss="modal"
+            #closeBtn
+          >
+            Close
+          </button>
           </form>
         </div>
       </div>

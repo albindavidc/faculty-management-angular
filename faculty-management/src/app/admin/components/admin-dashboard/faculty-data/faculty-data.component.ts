@@ -36,7 +36,11 @@ export class FacultyDataComponent implements OnInit {
 
   allFaculties: Faculty[] = [];
 
-  constructor(private fb: FormBuilder, private dataService: AdminDataService, private elementRef: ElementRef) {
+  constructor(
+    private fb: FormBuilder,
+    private dataService: AdminDataService,
+    private elementRef: ElementRef
+  ) {
     // Move form initialization here
     this.initForm();
   }
@@ -113,6 +117,8 @@ export class FacultyDataComponent implements OnInit {
           this.facultyDetailsForm.reset();
           alert('Faculty added successfully!');
           this.getAllEmployees();
+
+          this.closeBtn.nativeElement.click();
         },
         error: (error) => {
           console.error('Error details:', error);
@@ -158,9 +164,9 @@ export class FacultyDataComponent implements OnInit {
     );
   }
 
-  viewFaculty(faculty: Faculty){
+  viewFaculty(faculty: Faculty) {
     this.facultyDetailsForm = this.fb.group({
-      _id : faculty._id,
+      _id: faculty._id,
       faculty_name: faculty.faculty_name,
       faculty_number: faculty.faculty_number,
       department: faculty.department,
@@ -173,11 +179,10 @@ export class FacultyDataComponent implements OnInit {
 
       email: faculty.email,
       password: faculty.password,
-
-    })
+    });
   }
 
-  editFaculty(){
+  editFaculty() {
     if (this.facultyDetailsForm.valid) {
       const formValue = this.facultyDetailsForm.value;
       const facultyData: Faculty = {
@@ -198,22 +203,36 @@ export class FacultyDataComponent implements OnInit {
           this.facultyDetailsForm.reset();
           alert('Faculty added successfully!');
           this.getAllEmployees();
-          
-          this.closeBtn.nativeElement.click()
 
+          this.closeBtn.nativeElement.click();
         },
         error: (error) => {
           console.error('Error details:', error);
           alert(`Failed to add faculty: ${error.message}`);
         },
-      })
-
-      
+      });
     } else {
       console.log('Form validation errors:', this.getFormValidationErrors());
       alert('Please fill all required fields correctly.');
     }
   }
 
-
+  deleteFaculty(faculty: Faculty) {
+    if (
+      window.confirm(
+        `Are you sure you want to delete the ${faculty.faculty_name} ?`
+      )
+    ) {
+      this.dataService.deleteFaculty(faculty._id).subscribe({
+        next: (response) => {
+          this.facultyDetailsForm.reset();
+          alert('Faculty Deleted Successfully');
+          this.getAllEmployees();
+        },
+        error: (error) => {
+          alert(`Failed to add faculty: ${error.message}`);
+        },
+      });
+    }
+  }
 }

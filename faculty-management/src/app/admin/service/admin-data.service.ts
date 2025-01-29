@@ -49,4 +49,8 @@ export class AdminDataService {
   updateFaculty(faculty: Faculty): Observable<Faculty> {
     return this.http.put<Faculty>(this.dataUrl + '/' + faculty._id, faculty);
   }
+
+  deleteFaculty(id: string): Observable<Faculty> {
+    return this.http.delete<Faculty>(this.dataUrl + '/' + id);
+  }
 }

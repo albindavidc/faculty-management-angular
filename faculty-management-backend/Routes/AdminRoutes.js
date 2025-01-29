@@ -60,7 +60,7 @@ router.delete("/faculty/:id", async (req, res) => {
     if (!deleteFaculty) {
       res.status(404).json({ message: "Faculty not found" });
     }
-    res.status(201).json(updatingFaculty);
+    res.status(201).json(deleteFaculty);
   } catch (error) {
     console.error("Error saving faculty: ", error), res.status(500).json({ message: "Error saving faculty", error: error.message });
   }
