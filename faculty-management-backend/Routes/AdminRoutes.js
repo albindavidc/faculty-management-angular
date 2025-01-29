@@ -41,7 +41,7 @@ router.get("/faculty", async (req, res) => {
 //Update faculties API
 router.put("/faculty/:id", async (req, res) => {
   try {
-    const updatingFaculty = await Faculty.findByIdAndUpdate(req.params.id, req.body, { new: true});
+    const updatingFaculty = await Faculty.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
     if (!updatingFaculty) {
       res.status(404).json({ message: "Facult not found" });
@@ -50,6 +50,19 @@ router.put("/faculty/:id", async (req, res) => {
   } catch (error) {
     console.error("Error saving faculty:", error);
     res.status(500).json({ message: "Error saving faculty", error: error.message });
+  }
+});
+
+// Delete faculty API
+router.delete("/faculty/:id", async (req, res) => {
+  try {
+    const deleteFaculty = await Faculty.findByIdAndDelete(req.params.id);
+    if (!deleteFaculty) {
+      res.status(404).json({ message: "Faculty not found" });
+    }
+    res.status(201).json(updatingFaculty);
+  } catch (error) {
+    console.error("Error saving faculty: ", error), res.status(500).json({ message: "Error saving faculty", error: error.message });
   }
 });
 
