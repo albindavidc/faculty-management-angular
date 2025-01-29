@@ -3,6 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { FacultyEffects } from './admin/components/admin-dashboard/faculty-data/state/faculty.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
