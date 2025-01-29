@@ -4,6 +4,7 @@ import { AdminDataService } from '../../../../service/admin-data.service';
 import { FacultyActions } from './faculty.actions';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError, tap, exhaustMap } from 'rxjs/operators';
+import { facultyAdaptor } from './faculty.reducer';
 
 @Injectable({ providedIn: 'root' })
 export class FacultyEffects {
@@ -46,6 +47,27 @@ export class FacultyEffects {
           catchError((error) =>
             of(FacultyActions.loadFacultiesFailure({ error: error.message }))
           )
+        )
+      )
+    );
+  });
+
+  editFaculties$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(FacultyActions.editFaculty),
+      exhaustMap(({ faculty }) =>
+        this.adminDataService.updateFaculty(faculty).pipe(
+          map((updateFaculty) =>
+            FacultyActions.editFacultySuccess({ faculty: updateFaculty })
+          ),
+          catchError((error) => {
+            console.error('Error updating faculty: ', error);
+            return of(
+              FacultyActions.editFacultyFailure({
+                error: error.message || 'Failed to update faculty',
+              })
+            );
+          })
         )
       )
     );

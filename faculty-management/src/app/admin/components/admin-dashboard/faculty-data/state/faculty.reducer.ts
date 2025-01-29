@@ -7,7 +7,10 @@ export const facultyFeatureKey = 'faculty';
 
 export interface FacultyState extends EntityState<Faculty> {
   loading: boolean;
-  error: any;
+  error: string | null;
+
+  faculties: Faculty[];
+  selectedFaculty: Faculty | null;
 }
 
 export const facultyAdaptor: EntityAdapter<Faculty> =
@@ -18,6 +21,9 @@ export const facultyAdaptor: EntityAdapter<Faculty> =
 export const initialState: FacultyState = facultyAdaptor.getInitialState({
   loading: false,
   error: null,
+
+  faculties: [],
+  selectedFaculty: null,
 });
 
 export const facultyReducer = createReducer(
@@ -47,6 +53,26 @@ export const facultyReducer = createReducer(
     facultyAdaptor.setAll(faculties, { ...state, loading: false })
   ),
   on(FacultyActions.loadFacultiesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  //Edit Faculty Reducer
+  on(FacultyActions.editFaculty, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(FacultyActions.editFacultySuccess, (state, { faculty }) => ({
+    ...state,
+    faculties: state.faculties.map((f) =>
+      f._id === faculty._id ? faculty : f
+    ),
+    loading: false,
+    error: null,
+  })),
+  on(FacultyActions.editFacultyFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,

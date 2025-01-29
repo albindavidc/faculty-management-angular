@@ -52,7 +52,9 @@ export class FacultyDataComponent implements OnInit {
     // Move form initialization here
     this.initForm();
 
-    this.faculties$ = this.store.select(FacultySelector.selectAllFaculties);
+    this.faculties$ = this.store.select(
+      FacultySelector.selectAllFacultiesFromAdaptor
+    );
     this.loading$ = this.store.select(FacultySelector.selectFacultyLoading);
     this.error$ = this.store.select(FacultySelector.selectFacultyError);
   }
@@ -222,18 +224,37 @@ export class FacultyDataComponent implements OnInit {
         aadhaar_number: Number(formValue.aadhaar_number),
       };
 
-      this.dataService.updateFaculty(facultyData).subscribe({
-        next: (response) => {
-          this.facultyDetailsForm.reset();
-          alert('Faculty added successfully!');
-          this.getAllEmployees();
+      // this.dataService.updateFaculty(facultyData).subscribe({
+      //   next: (response) => {
+      //     this.facultyDetailsForm.reset();
+      //     alert('Faculty added successfully!');
+      //     this.getAllEmployees();
 
+      //     this.closeBtn.nativeElement.click();
+      //   },
+      //   error: (error) => {
+      //     console.error('Error details:', error);
+      //     alert(`Failed to add faculty: ${error.message}`);
+      //   },
+      // });
+
+      this.store.dispatch(FacultyActions.editFaculty({ faculty: facultyData }));
+
+      this.loading$.subscribe((loading) => {
+        if (!loading) {
+          this.facultyDetailsForm.reset();
           this.closeBtn.nativeElement.click();
-        },
-        error: (error) => {
-          console.error('Error details:', error);
-          alert(`Failed to add faculty: ${error.message}`);
-        },
+          this.store.dispatch(FacultyActions.loadFaculty());
+
+        }
+      });
+
+      this.error$.subscribe((error) => {
+        if (error) {
+          alert(`Failed to update faculty: ${error}`);
+        } else {
+          alert('Faculty updated successfully!');
+        }
       });
     } else {
       console.log('Form validation errors:', this.getFormValidationErrors());
