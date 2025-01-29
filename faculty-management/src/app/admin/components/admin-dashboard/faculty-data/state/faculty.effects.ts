@@ -72,4 +72,21 @@ export class FacultyEffects {
       )
     );
   });
+
+  //Delete Faculties
+  deleteFaculties$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(FacultyActions.deleteFaculty),
+      exhaustMap((action) =>
+        this.adminDataService.deleteFaculty(action.facultyId).pipe(
+          map(() =>
+            FacultyActions.deleteFacultySuccess({ facultyId: action.facultyId })
+          ),
+          catchError((error) =>
+            of(FacultyActions.deleteFacultyFailure({ error: error.message }))
+          )
+        )
+      )
+    );
+  });
 }

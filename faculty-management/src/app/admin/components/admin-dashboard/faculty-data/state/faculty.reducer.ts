@@ -76,5 +76,20 @@ export const facultyReducer = createReducer(
     ...state,
     loading: false,
     error,
+  })),
+
+  //Delete Faculty Reducer
+  on(FacultyActions.deleteFaculty, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(FacultyActions.deleteFacultySuccess, (state, { facultyId }) =>
+    facultyAdaptor.removeOne(facultyId, { ...state, loading: false })
+  ),
+  on(FacultyActions.deleteFacultyFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );

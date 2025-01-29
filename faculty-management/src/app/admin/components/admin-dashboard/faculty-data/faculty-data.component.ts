@@ -28,6 +28,7 @@ export class FacultyDataComponent implements OnInit {
   faculties$: Observable<Faculty[]>;
   loading$: Observable<boolean>;
   error$: Observable<any>;
+  totalFacultyCount$: Observable<number>;
 
   facultyObj: Faculty = {
     _id: '',
@@ -57,6 +58,9 @@ export class FacultyDataComponent implements OnInit {
     );
     this.loading$ = this.store.select(FacultySelector.selectFacultyLoading);
     this.error$ = this.store.select(FacultySelector.selectFacultyError);
+    this.totalFacultyCount$ = this.store.select(
+      FacultySelector.selectTotalFaculties
+    );
   }
 
   private initForm(): void {
@@ -245,7 +249,6 @@ export class FacultyDataComponent implements OnInit {
           this.facultyDetailsForm.reset();
           this.closeBtn.nativeElement.click();
           this.store.dispatch(FacultyActions.loadFaculty());
-
         }
       });
 
@@ -262,22 +265,21 @@ export class FacultyDataComponent implements OnInit {
     }
   }
 
-  deleteFaculty(faculty: Faculty) {
+  deleteFaculty(facultyId: string, facultyName: string) {
     if (
-      window.confirm(
-        `Are you sure you want to delete the ${faculty.faculty_name} ?`
-      )
+      window.confirm(`Are you sure you want to delete the ${facultyName} ?`)
     ) {
-      this.dataService.deleteFaculty(faculty._id).subscribe({
-        next: (response) => {
-          this.facultyDetailsForm.reset();
-          alert('Faculty Deleted Successfully');
-          this.getAllEmployees();
-        },
-        error: (error) => {
-          alert(`Failed to add faculty: ${error.message}`);
-        },
-      });
+      this.store.dispatch(FacultyActions.deleteFaculty({ facultyId }));
+      // this.dataService.deleteFaculty(faculty._id).subscribe({
+      //   next: (response) => {
+      //     this.facultyDetailsForm.reset();
+      //     alert('Faculty Deleted Successfully');
+      //     this.getAllEmployees();
+      //   },
+      //   error: (error) => {
+      //     alert(`Failed to add faculty: ${error.message}`);
+      //   },
+      // });
     }
   }
 }

@@ -10,10 +10,10 @@ export const {
     selectTotal: selectTotalFaculties,
 } = facultyAdaptor.getSelectors(selectFacultyState);
 
-export const selectAllFaculties = createSelector(
-    selectFacultyState,
-    (state) => state.faculties
-)
+// export const selectAllFaculties = createSelector(
+//     selectFacultyState,
+//     (state) => state.faculties
+// )
 
 export const selectFacultyLoading = createSelector(
     selectFacultyState,

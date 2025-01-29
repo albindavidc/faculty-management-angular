@@ -15,5 +15,9 @@ export const FacultyActions = createActionGroup({
     'Edit Faculty': props<{ faculty: Faculty }>(),
     'Edit Faculty Success': props<{ faculty: Faculty }>(),
     'Edit Faculty Failure': props<{ error: any }>(),
+
+    'Delete Faculty': props<{ facultyId: string }>(),
+    'Delete Faculty Success': props<{ facultyId: string }>(),
+    'Delete Faculty Failure': props<{ error: any }>(),
   },
 });
