@@ -1,4 +1,10 @@
 <div class="container-fluid">
+  <div *ngIf="loading$ | async" class="loading-spinner">Loading...</div>
+
+  <div *ngIf="error$ | async as error" class="alert alert-danger">
+    {{ error$ }}
+  </div>
+
   <!-- First Row -->
   <div class="row text-success text-center mt-3">
     <div class="col-md-4">
@@ -42,44 +48,54 @@
     </div>
   </div>
 
-  <div class="table table-hover mt-3">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Department</th>
-        <th scope="col">Email</th>
-        <th scope="col">Mobile</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let faculty of allFaculties">
-        <td>{{ faculty.faculty_number }}</td>
-        <td>{{ faculty.faculty_name }}</td>
-        <td>{{ faculty.department }}</td>
-        <td>{{ faculty.email }}</td>
-        <td>{{ faculty.mobile_number }}</td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-outline-secondary me-2"
-            data-bs-toggle="modal"
-            data-bs-target="#viewModal"
-            (click)="viewFaculty(faculty)"
-          >
-            View</button
-          >
-          <button type="button" class="btn btn-outline-primary me-2"
-          data-bs-toggle="modal"
-          data-bs-target="#editModal"
-          (click)="viewFaculty(faculty)"
-          >
-            Edit</button
-          ><button type="button" class="btn btn-outline-danger" (click)="deleteFaculty(faculty)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
+  <div *ngIf="faculties$ | async as faculties">
+    <div class="table table-hover mt-3">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Department</th>
+          <th scope="col">Email</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let faculty of faculties">
+          <td>{{ faculty.faculty_number }}</td>
+          <td>{{ faculty.faculty_name }}</td>
+          <td>{{ faculty.department }}</td>
+          <td>{{ faculty.email }}</td>
+          <td>{{ faculty.mobile_number }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-outline-secondary me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#viewModal"
+              (click)="viewFaculty(faculty)"
+            >
+              View
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#editModal"
+              (click)="viewFaculty(faculty)"
+            >
+              Edit</button
+            ><button
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="deleteFaculty(faculty)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </div>
   </div>
 
   <!-- View Faculty -->
@@ -162,7 +178,6 @@
     aria-labelledby="editModalLabel"
     aria-hidden="true"
     #editModal
-
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -205,7 +220,6 @@
                 class="form-control"
                 id="floatingInput"
                 formControlName="department"
-
               />
               <label for="floatingInput">Department</label>
               <div
@@ -350,20 +364,18 @@
               Update Faculty
             </button>
             <button
-            type="button"
-            class="btn btn-outline-success"
-            data-bs-dismiss="modal"
-            #closeBtn
-          >
-            Close
-          </button>
+              type="button"
+              class="btn btn-outline-success"
+              data-bs-dismiss="modal"
+              #closeBtn
+            >
+              Close
+            </button>
           </form>
         </div>
       </div>
     </div>
   </div>
-
-
 
   <!-- Add Faculty -->
   <div
@@ -558,13 +570,13 @@
               Save changes
             </button>
             <button
-            type="button"
-            class="btn btn-outline-success"
-            data-bs-dismiss="modal"
-            #closeBtn
-          >
-            Close
-          </button>
+              type="button"
+              class="btn btn-outline-success"
+              data-bs-dismiss="modal"
+              #closeBtn
+            >
+              Close
+            </button>
           </form>
         </div>
       </div>

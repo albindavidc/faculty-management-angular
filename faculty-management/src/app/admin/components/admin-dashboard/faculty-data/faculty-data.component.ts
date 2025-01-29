@@ -9,6 +9,11 @@ import {
 import { Faculty } from '../../../../model/faculty';
 import { CommonModule } from '@angular/common';
 import { AdminDataService } from '../../../service/admin-data.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { facultyAdaptor } from './state/faculty.reducer';
+import { FacultyActions } from './state/faculty.actions';
+import * as FacultySelector from './state/faculty.selectors';
 
 @Component({
   selector: 'app-faculty-data',
@@ -17,9 +22,12 @@ import { AdminDataService } from '../../../service/admin-data.service';
   styleUrl: './faculty-data.component.css',
 })
 export class FacultyDataComponent implements OnInit {
-  @ViewChild('closeBtn') closeBtn!: ElementRef; // Reference to modal
-
+  @ViewChild('closeBtn') closeBtn!: ElementRef;
   facultyDetailsForm: FormGroup = new FormGroup({});
+
+  faculties$: Observable<Faculty[]>;
+  loading$: Observable<boolean>;
+  error$: Observable<any>;
 
   facultyObj: Faculty = {
     _id: '',
@@ -39,10 +47,14 @@ export class FacultyDataComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: AdminDataService,
-    private elementRef: ElementRef
+    private store: Store
   ) {
     // Move form initialization here
     this.initForm();
+
+    this.faculties$ = this.store.select(FacultySelector.selectAllFaculties);
+    this.loading$ = this.store.select(FacultySelector.selectFacultyLoading);
+    this.error$ = this.store.select(FacultySelector.selectFacultyError);
   }
 
   private initForm(): void {
@@ -92,8 +104,10 @@ export class FacultyDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allFaculties = [];
-    this.getAllEmployees();
+    // this.allFaculties = [];
+    // this.getAllEmployees();
+
+    this.store.dispatch(FacultyActions.loadFaculty());
   }
 
   addNewFaculty() {
@@ -112,18 +126,28 @@ export class FacultyDataComponent implements OnInit {
         aadhaar_number: Number(formValue.aadhaar_number),
       };
 
-      this.dataService.addFaculty(facultyData).subscribe({
-        next: (response) => {
-          this.facultyDetailsForm.reset();
-          alert('Faculty added successfully!');
-          this.getAllEmployees();
+      // this.dataService.addFaculty(facultyData).subscribe({
+      //   next: (response) => {
+      //     this.facultyDetailsForm.reset();
+      //     alert('Faculty added successfully!');
+      //     this.getAllEmployees();
 
+      //     this.closeBtn.nativeElement.click();
+      //   },
+      //   error: (error) => {
+      //     console.error('Error details:', error);
+      //     alert(`Failed to add faculty: ${error.message}`);
+      //   },
+      // });
+
+      this.store.dispatch(FacultyActions.addFaculty({ faculty: facultyData }));
+
+      // Subscribe to the error$ observable to handle errors
+      this.error$.subscribe((error) => {
+        if (!error) {
+          this.facultyDetailsForm.reset();
           this.closeBtn.nativeElement.click();
-        },
-        error: (error) => {
-          console.error('Error details:', error);
-          alert(`Failed to add faculty: ${error.message}`);
-        },
+        }
       });
     } else {
       console.log('Form validation errors:', this.getFormValidationErrors());
