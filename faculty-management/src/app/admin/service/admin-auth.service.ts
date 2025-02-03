@@ -8,7 +8,7 @@ import { Signup } from '../../model/signup';
   providedIn: 'root',
 })
 export class AdminAuthService {
-  private apiUrl = 'http://localhost:3001/admin/signup/newSignup';
+  private apiUrl = 'http://localhost:3001/admin';
 
   #httpOptions = {
     headers: new HttpHeaders({
@@ -21,17 +21,17 @@ export class AdminAuthService {
 
   signup(signupObj: Signup): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(
-      this.apiUrl,
+      `${this.apiUrl}/newSignup`,
       signupObj
       // this.#httpOptions
     );
   }
 
   login(loginData: {
-    email: string;
+    userName: string;
     password: string;
   }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(this.apiUrl, loginData);
+    return this.http.post<{ token: string }>(`${this.apiUrl}/newLogin`, loginData);
   }
 
   // adminUserName: string = environment.adminUserName;

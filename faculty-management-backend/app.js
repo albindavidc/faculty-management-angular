@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import adminRoutes from "./Routes/AdminRoutes.js";
 import signupRoute from "./Routes/SignupRoutes.js";
+import loginRoute from "./Routes/LoginRouter.js";
 
 dotenv.config();
 db();
@@ -22,6 +23,7 @@ app.use(
   })
 );
 app.use("/admin", adminRoutes);
-app.use("/admin/signup", signupRoute);
+app.use("/admin", signupRoute);
+app.use("/admin", loginRoute);
 
 export default app;

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AdminAuthService } from '../../service/admin-auth.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-login',
@@ -17,7 +17,11 @@ import { RouterModule } from '@angular/router';
 export class AdminLoginComponent implements OnInit {
   adminLogin!: FormGroup;
 
-  constructor(private fb: FormBuilder, private adminAuth: AdminAuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private adminAuth: AdminAuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.adminLogin = this.fb.group({
@@ -26,6 +30,17 @@ export class AdminLoginComponent implements OnInit {
     });
   }
   onLogin() {
-    this.adminAuth.login(this.adminLogin.value);
+    this.adminAuth.login(this.adminLogin.value).subscribe({
+      next: (response) => {
+        console.log('Login successfull and back to the compo.', response);
+
+        localStorage.setItem('token', response.token);
+
+        this.router.navigate(['/admin/admin-dashboard']);
+      },
+      error: (error) => {
+        console.error('Login Failed: ', error);
+      },
+    });
   }
 }

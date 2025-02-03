@@ -14,9 +14,13 @@ export const routes: Routes = [
       {
         path: 'admin-dashboard',
         component: AdminDashboardComponent,
-        canActivate: [adminGuard],
+        // canActivate: [adminGuard],
       },
-      { path: 'login', component: AdminLoginComponent },
+      {
+        path: 'login',
+        component: AdminLoginComponent,
+        // canActivate: [adminGuard],
+      },
     ],
   },
   {
