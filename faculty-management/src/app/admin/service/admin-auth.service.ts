@@ -22,9 +22,16 @@ export class AdminAuthService {
   signup(signupObj: Signup): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(
       this.apiUrl,
-      signupObj,
+      signupObj
       // this.#httpOptions
     );
+  }
+
+  login(loginData: {
+    email: string;
+    password: string;
+  }): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(this.apiUrl, loginData);
   }
 
   // adminUserName: string = environment.adminUserName;

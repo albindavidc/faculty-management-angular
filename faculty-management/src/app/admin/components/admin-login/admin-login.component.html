@@ -13,7 +13,7 @@
             name=""
             id="username"
             class="form-control mb-3"
-            formControlName="firstName"
+            formControlName="userName"
           />
 
           <label for="password" class="form-label">password</label>
@@ -25,7 +25,13 @@
             formControlName="password"
           />
 
-          <button [disabled]="adminLogin.invalid"></button>
+          <p>If you don't have account : <a routerLink="/admin/signup">Signup</a></p>
+          <button
+            [disabled]="adminLogin.invalid"
+            class="btn btn-outline-success d-grid w-100"
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
