@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { AdminAuthService } from './service/admin-auth.service';
 import { CommonModule } from '@angular/common';
 import { AdminSignupComponent } from './components/admin-signup/admin-signup.component';
@@ -14,7 +13,7 @@ import { AdminSignupComponent } from './components/admin-signup/admin-signup.com
 export class AdminComponent {
   constructor(private adminAuth: AdminAuthService) {}
 
-  get isLoggedIn(): boolean {
-    return this.adminAuth.isAdminLoggedIn();
-  }
+  // get isLoggedIn(): boolean {
+  //   return this.adminAuth.isAdminLoggedIn();
+  // }
 }

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const facultySchema = new mongoose.Schema({
+const FacultySchema = new mongoose.Schema({
   faculty_number: { type: Number },
   faculty_name: { type: String, trim: true },
   department: { type: String },
@@ -12,6 +12,6 @@ const facultySchema = new mongoose.Schema({
   joining_year: { type: Number },
 });
 
-const Faculty = mongoose.model("Faculty", facultySchema);
+const Faculty = mongoose.model("Faculty", FacultySchema);
 
 export default Faculty;

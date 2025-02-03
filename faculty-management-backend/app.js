@@ -4,6 +4,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import adminRoutes from "./Routes/AdminRoutes.js";
+import signupRoute from "./Routes/SignupRoutes.js";
 
 dotenv.config();
 db();
@@ -21,5 +22,6 @@ app.use(
   })
 );
 app.use("/admin", adminRoutes);
+app.use("/admin/signup", signupRoute);
 
 export default app;

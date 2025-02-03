@@ -22,8 +22,8 @@ import * as FacultySelector from './state/faculty.selectors';
   styleUrl: './faculty-data.component.css',
 })
 export class FacultyDataComponent implements OnInit {
-  @ViewChild('closeBtn') closeBtn!: ElementRef;
   facultyDetailsForm: FormGroup = new FormGroup({});
+  @ViewChild('closeBtn') closeBtn!: ElementRef;
 
   faculties$: Observable<Faculty[]>;
   loading$: Observable<boolean>;
