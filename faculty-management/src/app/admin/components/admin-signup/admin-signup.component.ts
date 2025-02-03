@@ -5,6 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { SignupState } from './store/signup.reducer';
 import { Observable } from 'rxjs';
 import { SignupActions } from './store/signup.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-signup',
@@ -17,7 +18,7 @@ export class AdminSignupComponent implements OnInit {
   isSubmitting$: Observable<boolean>;
   submitError$: Observable<string | null>;
 
-  constructor(private fb: FormBuilder, private store: Store<{ signup: SignupState }>) {
+  constructor(private fb: FormBuilder, private store: Store<{ signup: SignupState }>, private router : Router) {
     this.isSubmitting$ = this.store.pipe(select((state) => state.signup.loading));
     this.submitError$ = this.store.pipe(select((state) => state.signup.error));
   }
@@ -77,6 +78,7 @@ export class AdminSignupComponent implements OnInit {
 
       console.log("Signup Dispatched Successfully!");
       this.adminSignup.reset();
+
     } catch (error) {
       console.error("Submission Error:", error);
       this.store.dispatch(SignupActions.addSignupFailure({ error: 'Registration Failed. Please try again later' }));
