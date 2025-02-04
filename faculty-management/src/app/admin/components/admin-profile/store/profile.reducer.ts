@@ -1,25 +1,33 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { ProfileActions } from './profile.actions';
 
-export const profileFeatureKey = 'profile';
-
-export interface State {
-
+export interface ProfileState {
+  profile: any | null;
+  loading: boolean;
+  error: string | null;
 }
 
-export const initialState: State = {
-
+const initialState: ProfileState = {
+  profile: null,
+  loading: false,
+  error: null,
 };
 
-export const reducer = createReducer(
+export const profileReducer = createReducer(
   initialState,
-  on(ProfileActions.loadProfiles, state => state),
-  on(ProfileActions.loadProfilesSuccess, (state, action) => state),
-  on(ProfileActions.loadProfilesFailure, (state, action) => state),
+  on(ProfileActions.loadProfiles, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(ProfileActions.loadProfilesSuccess, (state, { profile }) => ({
+    ...state,
+    profile,
+    loading: false,
+  })),
+  on(ProfileActions.loadProfilesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
 );
-
-export const profileFeature = createFeature({
-  name: profileFeatureKey,
-  reducer,
-});
-

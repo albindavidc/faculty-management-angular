@@ -4,6 +4,7 @@ import { AdminDashboardComponent } from './admin/components/admin-dashboard/admi
 import { adminGuard } from './service/admin.guard';
 import { AdminSignupComponent } from './admin/components/admin-signup/admin-signup.component';
 import { AdminLoginComponent } from './admin/components/admin-login/admin-login.component';
+import { AdminProfileComponent } from './admin/components/admin-profile/admin-profile.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,10 @@ export const routes: Routes = [
         path: 'login',
         component: AdminLoginComponent,
         // canActivate: [adminGuard],
+      },
+      {
+        path: 'profile',
+        component: AdminProfileComponent,
       },
     ],
   },

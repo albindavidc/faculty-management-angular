@@ -31,7 +31,25 @@ export class AdminAuthService {
     userName: string;
     password: string;
   }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/newLogin`, loginData);
+    return this.http.post<{ token: string }>(
+      `${this.apiUrl}/newLogin`,
+      loginData
+    );
+  }
+
+  getProfile(): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.warn('No token found in localStorage');
+      throw new Error('Unauthorized: No token provided');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get(`${this.apiUrl}/profile`, { headers });
   }
 
   // adminUserName: string = environment.adminUserName;

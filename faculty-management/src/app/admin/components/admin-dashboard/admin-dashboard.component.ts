@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FacultyDataComponent } from './faculty-data/faculty-data.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AdminProfileComponent } from '../admin-profile/admin-profile.component';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [FacultyDataComponent, CommonModule],
+  imports: [FacultyDataComponent, CommonModule, AdminProfileComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',
 })
 export class AdminDashboardComponent implements OnInit {
-  training: boolean = false;
+  profile: boolean = false;
   faculty: boolean = false;
 
   constructor(private router: Router) {}
@@ -20,7 +21,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   setOff(): void {
-    this.training = false;
+    this.profile = false;
     this.faculty = false;
   }
 
@@ -29,9 +30,9 @@ export class AdminDashboardComponent implements OnInit {
     this.faculty = true;
   }
 
-  showTrainingData() {
+  showProfileData() {
     this.setOff();
-    this.training = true;
+    this.profile = true;
   }
 
   signOut() {

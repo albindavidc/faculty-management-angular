@@ -23,13 +23,13 @@
         Faculty
       </a>
 
-      <a class="p-3" (click)="showFacultyData()">
+      <a class="p-3" (click)="showProfileData()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="20"
+          height="20"
           fill="currentColor"
-          class="bi bi-person-circle"
+          class="bi bi-person-circle me-3"
           viewBox="0 0 16 16"
         >
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -66,6 +66,7 @@
 
     <div class="col-sm-10 bg-white">
       <app-faculty-data *ngIf="faculty"></app-faculty-data>
+      <app-admin-profile *ngIf="profile"></app-admin-profile>
     </div>
   </div>
 </div>
