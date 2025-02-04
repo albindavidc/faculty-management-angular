@@ -22,6 +22,7 @@ export class SignupEffects {
         this.adminAuth.signup(action.signup).pipe(
           tap((response) => {
             console.log('API Response:', response);
+            localStorage.setItem('token', response.token);
             this.router.navigate(['/admin/admin-dashboard']);
           }),
           map((response) =>

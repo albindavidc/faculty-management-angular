@@ -11,9 +11,9 @@ import { CommonModule } from '@angular/common';
 import { AdminDataService } from '../../../service/admin-data.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { facultyAdaptor } from './state/faculty.reducer';
-import { FacultyActions } from './state/faculty.actions';
-import * as FacultySelector from './state/faculty.selectors';
+import { facultyAdaptor } from './store/faculty.reducer';
+import { FacultyActions } from './store/faculty.actions';
+import * as FacultySelector from './store/faculty.selectors';
 
 @Component({
   selector: 'app-faculty-data',
